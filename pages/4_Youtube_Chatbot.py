@@ -26,9 +26,10 @@ class YoutubeChatbot:
         # Load documents
         docs = []
 
-        #Fetching Youtube transcripts
-        loader = YoutubeLoader.from_youtube_url(url)
-        docs.extend(loader.load())
+        #Fetching Youtube transcripts 
+        for link in url: 
+            loader = YoutubeLoader.from_youtube_url(link) 
+            docs.extend(loader.load())
 
         # Split documents
         text_splitter = RecursiveCharacterTextSplitter(
@@ -59,9 +60,10 @@ class YoutubeChatbot:
 
     @utils.enable_chat_history
     def main(self):
-        # User Inputs
-        url = st.sidebar.text_input(label='Enter Youtube URLs', value='')
-
+        # User Inputs 
+        url = st.sidebar.text_area(label='Enter Youtube URLs', value='') 
+        url = url.split('\n')
+    
         if not url:
             st.error("Please add links to continue!")
             st.stop()
